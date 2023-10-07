@@ -5,6 +5,8 @@ import { player } from '../sprite/player.js';
 
 const collision_detection = () => {
     const enemys = store.sprites.filter(sprite => sprite.type === "enemy");
+    const bullets = store.sprites.filter(sprite => sprite.type === "bullet");
+
     enemys.forEach(enemy => {
         if (enemy.location.x < player.location.x + player.size.w * 0.75 &&
             enemy.location.x + enemy.size.w * 0.75 > player.location.x &&
@@ -13,7 +15,19 @@ const collision_detection = () => {
             player.attributes.life -= enemy.attributes.attack;
             enemy.attributes.life -= player.attributes.attack;
         }
+
+        bullets.forEach(bullet => {
+            if (enemy.location.x < bullet.location.x + bullet.size.w * 0.75 &&
+                enemy.location.x + enemy.size.w * 0.75 > bullet.location.x &&
+                enemy.location.y < bullet.location.y + bullet.size.h * 0.75 &&
+                enemy.location.y + enemy.size.h * 0.75 > bullet.location.y) {
+                bullet.attributes.life -= enemy.attributes.attack;
+                enemy.attributes.life -= bullet.attributes.attack;
+            }
+        });
+
     });
+
 }
 
 export const main_looping = () => {

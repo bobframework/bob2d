@@ -20,6 +20,11 @@ const make_enemy = () => {
     enemy.size = { w: 20, h: 28 };
     enemy.vector.x = -2;
     enemy.attributes.img_id = "x";
+    enemy.on_update = (e) => {
+        if (e.location.x <= -20) {
+            e.attributes.life = 0;
+        }
+    }
 }
 
 settings.init = () => {
@@ -27,6 +32,7 @@ settings.init = () => {
     player_set_attribute("can_outofscreen", false);
     player_set_attribute("size", { w: 25, h: 25 });
     player_set_attribute("location", { x: 10, y: 50 });
+    player_set_attribute("life", 1);
     player_set_attribute("attack", 0);
     player_set_attribute("img_id", "dino");
     make_enemy();

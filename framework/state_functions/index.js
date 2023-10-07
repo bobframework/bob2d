@@ -1,8 +1,7 @@
 import { store } from '../store.js';
 
-import { clear, text, draw } from '../canvas.js';
+import { draw } from '../canvas.js';
 
-import { player } from '../sprite/player.js';
 
 import { wait_all_images_loaded } from './wait_all_images_loaded.js';
 import { wait_user_start } from './wait_user_start.js';

@@ -36,6 +36,8 @@ export class Sprite {
 
         }
 
+        this.on_update = () => { }
+
     }
 
     set_size(_w, _h) {
@@ -82,6 +84,8 @@ export class Sprite {
                 this.vector.y = 0;
             }
         }
+
+        this.on_update(this);
     }
     draw() {
         if (this.attributes.img_id) {
