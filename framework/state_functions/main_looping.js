@@ -1,7 +1,7 @@
 import { store } from '../store.js';
 import { text } from '../canvas.js';
 import { settings } from '../setting.js';
-import { player } from '../player.js';
+import { player } from '../sprite/player.js';
 
 const collision_detection = () => {
     const enemys = store.sprites.filter(sprite => sprite.type === "enemy");

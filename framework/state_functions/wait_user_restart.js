@@ -1,6 +1,6 @@
 import { store } from '../store.js';
 import { text } from '../canvas.js';
-import { player } from '../player.js';
+import { player } from '../sprite/player.js';
 
 export const wait_user_restart = () => {
     text(`Game Over`);
