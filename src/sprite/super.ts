@@ -1,9 +1,18 @@
-import { get_image } from '../res.js';
-import { ctx } from '../canvas.js';
-import { settings } from '../setting.js';
+import { get_image } from '../res';
+import { ctx } from '../canvas';
+import { settings } from '../setting';
 
 export class Sprite {
+    score: number;
+    type: string;
+    location: { x: number; y: number; };
+    size: { w: number; h: number; };
+    vector: { x: number; y: number; };
+    attributes: { name: string | null; img_id: string | null; color: string; can_outofscreen: boolean; can_userctrl: boolean; life: number; attack: number; };
+    data: {};
     constructor() {
+
+        this.score = 0;
 
         this.type = "";//player/enemy/food/
 
@@ -35,31 +44,8 @@ export class Sprite {
         this.data = {
 
         }
-
-        this.on_update = () => { }
-
     }
-
-    set_size(_w, _h) {
-        this.size = {
-            w: _w,
-            h: _h
-        }
-    }
-
-    set_location(_x, _y) {
-        this.location = {
-            x: _x,
-            y: _y
-        }
-    }
-
-    set_vector(_x, _y) {
-        this.vector = {
-            x: _x,
-            y: _y
-        }
-    }
+    on_update(_x: Sprite) { }
 
     update() {
         this.location.x += this.vector.x;
@@ -88,16 +74,18 @@ export class Sprite {
         this.on_update(this);
     }
     draw() {
-        if (this.attributes.img_id) {
-            const img = get_image(this.attributes.img_id);
-            ctx.drawImage(img, this.location.x, this.location.y, this.size.w, this.size.h);
-        } else {
-            ctx.fillStyle = this.attributes.color;
-            ctx.fillRect(this.location.x, this.location.y, this.size.w, this.size.h);
+        if (ctx) {
+            if (this.attributes.img_id) {
+                const img = get_image(this.attributes.img_id);
+                ctx.drawImage(img, this.location.x, this.location.y, this.size.w, this.size.h);
+            } else {
+                ctx.fillStyle = this.attributes.color;
+                ctx.fillRect(this.location.x, this.location.y, this.size.w, this.size.h);
+            }
+            // ctx.font = "10px serif";
+            // ctx.textAlign = "center";
+            // ctx.fillStyle = "#000";
+            // ctx.fillText(this.attributes.life, this.location.x, this.location.y);
         }
-        // ctx.font = "10px serif";
-        // ctx.textAlign = "center";
-        // ctx.fillStyle = "#000";
-        // ctx.fillText(this.attributes.life, this.location.x, this.location.y);
     }
 }

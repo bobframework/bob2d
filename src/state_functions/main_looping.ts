@@ -1,7 +1,7 @@
-import { store } from '../store.js';
-import { text } from '../canvas.js';
-import { settings } from '../setting.js';
-import { player } from '../sprite/player.js';
+import { store, State } from '../store';
+import { text } from '../canvas';
+import { LocationType, ScoreType, settings } from '../setting';
+import { player } from '../sprite/player';
 
 const collision_detection = () => {
     const enemys = store.sprites.filter(sprite => sprite.type === "enemy");
@@ -23,6 +23,7 @@ const collision_detection = () => {
                 enemy.location.y + enemy.size.h * 0.75 > bullet.location.y) {
                 bullet.attributes.life -= enemy.attributes.attack;
                 enemy.attributes.life -= bullet.attributes.attack;
+                player.score += 1;
             }
         });
 
@@ -36,7 +37,7 @@ export const main_looping = () => {
 
     if (store.k === "KeyP") {
         store.k = "";
-        store.state = 'paused';
+        store.state = State.paused;
     }
 
     if (store.k === "") {
@@ -87,7 +88,19 @@ export const main_looping = () => {
         s.update();
     });
 
-    text(`${store.time} m`, 10, 10);
+    const txt = settings.score_format.replace('{{score}}', settings.score_type === ScoreType.KilledEnemy ? player.score : store.time);
+
+    switch (settings.score_location_type) {
+        case LocationType.Center:
+            text(txt, true, {
+                x: settings.screen.w / 2,
+                y: settings.screen.h / 1.7
+            });
+            break;
+        case LocationType.Pos:
+            text(txt, false, settings.score_location);
+            break;
+    }
 
     collision_detection();
 
@@ -95,7 +108,7 @@ export const main_looping = () => {
         if (s.attributes.life < 1) {
             if (s.type === "player") {
                 //game over
-                store.state = 'wait_user_restart';
+                store.state = State.wait_user_restart;
                 return false;
             } else {
                 store.sprites.splice(i, 1);

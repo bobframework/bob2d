@@ -1,7 +1,7 @@
-import { store } from '../store.js';
-import { Enemy } from "./enemy.js";
-import { Bullet } from "./bullet.js";
-import { Food } from "./food.js";
+import { store } from '../store';
+import { Enemy } from "./enemy";
+import { Bullet } from "./bullet";
+import { Food } from "./food";
 
 export const factory = {
     make_enemy: () => {

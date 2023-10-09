@@ -1,4 +1,4 @@
-import { Sprite } from "./super.js";
+import { Sprite } from "./super";
 export class Enemy extends Sprite {
     constructor() {
         super();
